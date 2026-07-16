@@ -149,9 +149,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     let code: u32 = rand::thread_rng().gen_range(100000..999999);
                     format!("{:06}", code)
                 };
-                let wss_url = format!("ws://{}/ws/{}", relay_host, room);
+                let protocol = if relay_host.starts_with("localhost") || relay_host.contains("127.0.0.1") || relay_host.contains(":") {
+                    "ws"
+                } else {
+                    "wss"
+                };
+                let wss_url = format!("{}://{}/ws/{}", protocol, relay_host, room);
                 println!("{}", format!(" [fsociety] Registering room code: {}", room).bright_green());
-                println!("{}", format!(" [fsociety] Target address: ws://{}/ws/{}", relay_host, room).green());
+                println!("{}", format!(" [fsociety] Target address: {}://{}/ws/{}", protocol, relay_host, room).green());
                 
                 // Print QR code for mobile web interface fallback
                 let _ = qr2term::print_qr(&format!("http://{}/room/{}", relay_host, room));
@@ -178,7 +183,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 let room = &args[2];
                 let relay_host = std::env::var("RELAY_SERVER")
                     .unwrap_or_else(|_| DEFAULT_RELAY.to_string());
-                let wss_url = format!("ws://{}/ws/{}", relay_host, room);
+                let protocol = if relay_host.starts_with("localhost") || relay_host.contains("127.0.0.1") || relay_host.contains(":") {
+                    "ws"
+                } else {
+                    "wss"
+                };
+                let wss_url = format!("{}://{}/ws/{}", protocol, relay_host, room);
                 println!("{}", format!(" [fsociety] Dialing global room {}...", room).green());
                 let conn = network::connect_ws(&wss_url)?;
                 (conn, room.clone(), "BLIND RELAY (WS)".to_string())
