@@ -69,7 +69,7 @@ This project is pre-configured with a blueprint for Render:
 1.  Fork the repository.
 2.  Log into Render Dashboard.
 3.  Click **New +** > **Blueprint**.
-4.  Select your repository and apply. Render will automatically build the service named `fsociety-relay` based on the [render.yaml](file:///d:/node_prj/elliot/fsociety/render-server/render.yaml) file.
+4.  Select your repository and apply. Render will automatically build the service named `fsociety-relay` based on the [render.yaml](/render.yaml) file.
 
 **Manual Web Service Configuration on Render:**
 *   **Runtime**: `Rust`
