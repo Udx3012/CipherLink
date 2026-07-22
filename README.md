@@ -8,6 +8,12 @@
 
 `fsociety` is a lightweight, terminal-based peer-to-peer (P2P) file sharing and instant chat application. Built in pure Rust, it uses end-to-end encryption (E2EE) to guarantee that your conversations and file streams are completely private. With support for both direct local connections and global internet tunnels via an un-trusted WebSocket relay server, `fsociety` enables instant communication across networks without any cloud storage reliance.
 
+## 🖼️ User Interface
+
+![Terminal Setup](assets/terminal.png)
+
+![Chat Session](assets/chat.png)
+
 ---
 
 ## ✨ Key Features
@@ -39,7 +45,7 @@
                               │
                   ┌───────────┴───────────┐
                   ▼                       ▼
-           [ Chat Message ]       [ 64KB File Chunk ]
+           [ Chat Message ]       [ 256KB File Chunk ]
 ```
 
 1.  **Stitching & Signaling**: When staging a global connection, the clients connect to the relay server using WebSockets. The server matches the clients via a 6-digit room code and stitches their TCP/WebSocket streams together.
@@ -119,7 +125,7 @@ Once you enter the secure interactive chat terminal:
     ```text
     /send C:\Documents\archive.zip
     ```
-    *The file is read in 64KB blocks, encrypted, and streamed to the peer. A progress bar will show on both screens.*
+    *The file is read in 256KB blocks, encrypted, and streamed to the peer. A progress bar will show on both screens.*
 *   **🚪 Exit**: Type `/exit` to close the E2EE tunnel and quit the terminal UI.
 
 ---
