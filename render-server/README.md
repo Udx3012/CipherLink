@@ -1,8 +1,8 @@
-# 🌐 fsociety-relay
+# 🌐 cipherlink-relay
 
-**A Zero-Knowledge Ephemeral Signaling & Fallback Data Transfer Server for fsociety**
+**A Zero-Knowledge Ephemeral Signaling & Fallback Data Transfer Server for CipherLink**
 
-`fsociety-relay` is a lightweight HTTP and WebSocket relay server written in Rust. It serves as the bridge for `fsociety` clients to connect and share data across the internet when direct P2P connections are blocked by NATs, firewalls, or routers.
+`cipherlink-relay` is a lightweight HTTP and WebSocket relay server written in Rust. It serves as the bridge for `CipherLink` clients to connect and share data across the internet when direct P2P connections are blocked by NATs, firewalls, or routers.
 
 ---
 
@@ -69,7 +69,7 @@ This project is pre-configured with a blueprint for Render:
 1.  Fork the repository.
 2.  Log into Render Dashboard.
 3.  Click **New +** > **Blueprint**.
-4.  Select your repository and apply. Render will automatically build the service named `fsociety-relay` based on the [render.yaml](/render.yaml) file.
+4.  Select your repository and apply. Render will automatically build the service named `cipherlink-relay` based on the [render.yaml](/render-server/render.yaml) file.
 
 **Manual Web Service Configuration on Render:**
 *   **Runtime**: `Rust`
@@ -80,12 +80,12 @@ This project is pre-configured with a blueprint for Render:
 ---
 
 ### Option 2: Deploy to VPS or Private Server
-To run `fsociety-relay` on your own Linux server:
+To run `cipherlink-relay` on your own Linux server:
 
 1.  **Clone the code & build**:
     ```bash
-    git clone https://github.com/YOUR_USERNAME/fsociety.git
-    cd fsociety/render-server
+    git clone https://github.com/Udx3012/CipherLink.git
+    cd CipherLink/render-server
     cargo build --release
     ```
 2.  **Run the binary**:
@@ -94,27 +94,27 @@ To run `fsociety-relay` on your own Linux server:
     ```
 
 #### Systemd Service configuration (For production)
-Create a file at `/etc/systemd/system/fsociety-relay.service`:
+Create a file at `/etc/systemd/system/cipherlink-relay.service`:
 ```ini
 [Unit]
-Description=fsociety Relay Server
+Description=CipherLink Relay Server
 After=network.target
 
 [Service]
 Type=simple
 User=nobody
 Restart=always
-WorkingDirectory=/opt/fsociety/render-server
+WorkingDirectory=/opt/CipherLink/render-server
 Environment=PORT=10000
-ExecStart=/opt/fsociety/render-server/target/release/render-server
+ExecStart=/opt/CipherLink/render-server/target/release/render-server
 
 [Install]
 WantedBy=multi-user.target
 ```
 Enable and start the service:
 ```bash
-sudo systemctl enable fsociety-relay
-sudo systemctl start fsociety-relay
+sudo systemctl enable cipherlink-relay
+sudo systemctl start cipherlink-relay
 ```
 
 ---

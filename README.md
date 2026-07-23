@@ -1,4 +1,4 @@
-# 💻 fsociety
+# 💻 CipherLink
 
 **Secure, Ephemeral, End-to-End Encrypted P2P Chat & File Streaming CLI**
 
@@ -6,7 +6,7 @@
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Security](https://img.shields.io/badge/Security-E2EE%20(X25519%20%2B%20ChaCha20Poly1305)-green)](https://en.wikipedia.org/wiki/End-to-end_encryption)
 
-`fsociety` is a lightweight, terminal-based peer-to-peer (P2P) file sharing and instant chat application. Built in pure Rust, it uses end-to-end encryption (E2EE) to guarantee that your conversations and file streams are completely private. With support for both direct local connections and global internet tunnels via an un-trusted WebSocket relay server, `fsociety` enables instant communication across networks without any cloud storage reliance.
+`CipherLink` is a lightweight, terminal-based peer-to-peer (P2P) file sharing and instant chat application. Built in pure Rust, it uses end-to-end encryption (E2EE) to guarantee that your conversations and file streams are completely private. With support for both direct local connections and global internet tunnels via an un-trusted WebSocket relay server, `CipherLink` enables instant communication across networks without any cloud storage reliance.
 
 ## 🖼️ User Interface
 
@@ -65,8 +65,8 @@ Make sure you have Rust and Cargo installed:
 
 1.  **Clone the repository**:
     ```bash
-    git clone https://github.com/YOUR_USERNAME/fsociety.git
-    cd fsociety
+    git clone https://github.com/Udx3012/CipherLink.git
+    cd CipherLink
     ```
 2.  **Build the project**:
     ```bash
@@ -77,7 +77,7 @@ Make sure you have Rust and Cargo installed:
 
 ## 📖 Usage Guide
 
-`fsociety` can be run in two modes: **Global Mode** (via the Render relay server) or **Local Mode** (direct TCP connection over local networks).
+`CipherLink` can be run in two modes: **Global Mode** (via the Render relay server) or **Local Mode** (direct TCP connection over local networks).
 
 ### 1. Global Mode (Across the Internet)
 
@@ -142,7 +142,7 @@ cargo run
 *The server starts listening on port `10000` (configurable via the `PORT` environment variable).*
 
 ### Deploy to Render
-We provide a [render.yaml](/render.yaml) file for one-click setup:
+We provide a [render.yaml](/render-server/render.yaml) file for one-click setup:
 1.  Fork this repository.
 2.  Go to Render, create a new **Blueprint**, and connect your repository.
 3.  Deploy! It will automatically build and start the server.
@@ -158,9 +158,10 @@ cargo run --release stage
 
 ## 🔒 Security Posture
 
-*   **Forward Secrecy**: Keys are ephemeral and regenerated for every single session. Once you exit `/fsociety`, the keys are zeroized in memory, making past session captures impossible to decrypt.
+*   **Forward Secrecy**: Keys are ephemeral and regenerated for every single session. Once you exit `/exit`, the keys are zeroized in memory, making past session captures impossible to decrypt.
 *   **Zero-Knowledge Relay**: Since the relay server only stitches connections, it never sees the decrypted payload. It operates on a strict zero-knowledge level.
 *   **Memory Security**: Cryptographic key bytes are zeroized (`zeroize` crate) when the `SecureSession` drops to prevent key extraction from core dumps.
 
 ## 📄 License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+

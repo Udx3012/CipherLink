@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: fsociety-relay
+    name: cipherlink-relay
     env: rust
     runtime: rust
     buildCommand: cargo build --release --manifest-path render-server/Cargo.toml

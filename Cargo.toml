@@ -1,10 +1,10 @@
 [package]
-name = "fsociety"
+name = "cipherlink"
 version = "0.1.0"
 edition = "2021"
 
 [[bin]]
-name = "fsociety"
+name = "cipherlink"
 path = "src/main.rs"
 
 [dependencies]

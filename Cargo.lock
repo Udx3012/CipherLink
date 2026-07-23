@@ -124,6 +124,23 @@ dependencies = [
 ]
 
 [[package]]
+name = "cipherlink"
+version = "0.1.0"
+dependencies = [
+ "chacha20poly1305",
+ "colored",
+ "crossterm",
+ "indicatif",
+ "rand",
+ "ratatui",
+ "sha2",
+ "tungstenite",
+ "url",
+ "x25519-dalek",
+ "zeroize",
+]
+
+[[package]]
 name = "colored"
 version = "2.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -316,23 +333,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "cb4cb245038516f5f85277875cdaa4f7d2c9a0fa0468de06ed190163b1581fcf"
 dependencies = [
  "percent-encoding",
-]
-
-[[package]]
-name = "fsociety"
-version = "0.1.0"
-dependencies = [
- "chacha20poly1305",
- "colored",
- "crossterm",
- "indicatif",
- "rand",
- "ratatui",
- "sha2",
- "tungstenite",
- "url",
- "x25519-dalek",
- "zeroize",
 ]
 
 [[package]]

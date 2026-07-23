@@ -10,7 +10,7 @@ use rand::Rng;
 use network::RawConnection;
 use ui::{AppEvent, AppState};
 
-const DEFAULT_RELAY: &str = "fsociety-qzjr.onrender.com";
+const DEFAULT_RELAY: &str = "cipherlink-qzjr.onrender.com";
 
 fn show_boot_animation() {
     let logo = r#"
@@ -80,15 +80,15 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     "#;
 
     println!("{}", logo.bright_green());
-    print!("{}", " [fsociety] INITIALIZING PEER-TO-PEER PROTOCOL...".green());
+    print!("{}", " [cipherlink] INITIALIZING PEER-TO-PEER PROTOCOL...".green());
     let _ = std::io::Write::flush(&mut std::io::stdout());
     thread::sleep(Duration::from_millis(400));
     
     let stages = [
-        " [fsociety] LOADING ENCRYPTION MODULE (Curve25519)... DONE",
-        " [fsociety] CONFIGURING AUTHENTICATED ENCRYPTION (ChaCha20-Poly1305)... DONE",
-        " [fsociety] ENABLING SHADOW MEMORY WIPER (Zeroize)... ACTIVE",
-        " [fsociety] ESTABLISHING SECURE TUNNEL...",
+        " [cipherlink] LOADING ENCRYPTION MODULE (Curve25519)... DONE",
+        " [cipherlink] CONFIGURING AUTHENTICATED ENCRYPTION (ChaCha20-Poly1305)... DONE",
+        " [cipherlink] ENABLING SHADOW MEMORY WIPER (Zeroize)... ACTIVE",
+        " [cipherlink] ESTABLISHING SECURE TUNNEL...",
     ];
 
     for stage in &stages {
@@ -104,15 +104,15 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args: Vec<String> = std::env::args().collect();
 
     if args.len() < 2 {
-        println!("{}", "FSOCIETY v2.0 (E2EE chat/transfer)".bright_green());
+        println!("{}", "CIPHERLINK v2.0 (E2EE chat/transfer)".bright_green());
         println!("Usage:");
-        println!("  fsociety stage [code]     - Create a secure room globally (optional custom 6-digit code)");
-        println!("  fsociety stage --local    - Listen for local connection on port 8766");
-        println!("  fsociety connect <code>   - Connect to a global room");
-        println!("  fsociety connect --local <ip:port> - Connect directly to a local peer");
+        println!("  cipherlink stage [code]     - Create a secure room globally (optional custom 6-digit code)");
+        println!("  cipherlink stage --local    - Listen for local connection on port 8766");
+        println!("  cipherlink connect <code>   - Connect to a global room");
+        println!("  cipherlink connect --local <ip:port> - Connect directly to a local peer");
     }
 
-    let username_file = ".fsociety_user";
+    let username_file = ".cipherlink_user";
     let our_username = if let Ok(mut file) = std::fs::File::open(username_file) {
         let mut contents = String::new();
         use std::io::Read;
@@ -130,7 +130,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let (conn, room_code, conn_status) = match args[1].as_str() {
         "stage" => {
             if args.len() >= 3 && args[2] == "--local" {
-                println!("{}", " [fsociety] Waiting for direct TCP connection on port 8766...".green());
+                println!("{}", " [cipherlink] Waiting for direct TCP connection on port 8766...".green());
                 let conn = network::listen_tcp(8766)?;
                 (conn, "LOCAL".to_string(), "DIRECT (TCP)".to_string())
             } else {
@@ -141,7 +141,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     if custom_code.len() == 6 && custom_code.chars().all(|c| c.is_numeric()) {
                         custom_code.clone()
                     } else {
-                        println!("{}", format!(" [fsociety] Warning: '{}' is not a valid 6-digit numeric code. Generating random code.", custom_code).yellow());
+                        println!("{}", format!(" [cipherlink] Warning: '{}' is not a valid 6-digit numeric code. Generating random code.", custom_code).yellow());
                         let code: u32 = rand::thread_rng().gen_range(100000..999999);
                         format!("{:06}", code)
                     }
@@ -155,10 +155,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     "wss"
                 };
                 let wss_url = format!("{}://{}/ws/{}", protocol, relay_host, room);
-                println!("{}", format!(" [fsociety] Registering room code: {}", room).bright_green());
-                println!("{}", format!(" [fsociety] Target address: {}://{}/ws/{}", protocol, relay_host, room).green());
+                println!("{}", format!(" [cipherlink] Registering room code: {}", room).bright_green());
+                println!("{}", format!(" [cipherlink] Target address: {}://{}/ws/{}", protocol, relay_host, room).green());
                 
-
 
                 let conn = network::connect_ws(&wss_url)?;
                 (conn, room, "BLIND RELAY (WS)".to_string())
@@ -175,7 +174,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     return Ok(());
                 }
                 let addr = &args[3];
-                println!("{}", format!(" [fsociety] Connecting directly to {}...", addr).green());
+                println!("{}", format!(" [cipherlink] Connecting directly to {}...", addr).green());
                 let conn = network::connect_tcp(addr)?;
                 (conn, "LOCAL".to_string(), "DIRECT (TCP)".to_string())
             } else {
@@ -188,7 +187,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     "wss"
                 };
                 let wss_url = format!("{}://{}/ws/{}", protocol, relay_host, room);
-                println!("{}", format!(" [fsociety] Dialing global room {}...", room).green());
+                println!("{}", format!(" [cipherlink] Dialing global room {}...", room).green());
                 let conn = network::connect_ws(&wss_url)?;
                 (conn, room.clone(), "BLIND RELAY (WS)".to_string())
             }
@@ -199,11 +198,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
     };
 
-    println!("{}", " [fsociety] Tunnel established. Initiating E2EE handshake...".bright_green());
+    println!("{}", " [cipherlink] Tunnel established. Initiating E2EE handshake...".bright_green());
     let (conn, session) = network::perform_handshake(conn)?;
     let session = Arc::new(session);
     let fingerprint = session.fingerprint().to_string();
-    println!("{}", format!(" [fsociety] SECURE SESSION ACTIVE. Fingerprint: {}", fingerprint).bright_green());
+    println!("{}", format!(" [cipherlink] SECURE SESSION ACTIVE. Fingerprint: {}", fingerprint).bright_green());
     thread::sleep(Duration::from_secs(1));
 
     let _ = conn.set_nonblocking(true);

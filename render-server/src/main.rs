@@ -61,7 +61,7 @@ fn main() -> std::io::Result<()> {
     let rooms: Rooms = Arc::new(Mutex::new(HashMap::new()));
     let ws_rooms: WsRooms = Arc::new(Mutex::new(HashMap::new()));
     
-    println!("fsociety Relay Server running on 0.0.0.0:{}", port);
+    println!("CipherLink Relay Server running on 0.0.0.0:{}", port);
     let listener = TcpListener::bind(format!("0.0.0.0:{}", port))?;
     for stream in listener.incoming() {
         if let Ok(stream) = stream {

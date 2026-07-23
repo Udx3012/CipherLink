@@ -5,7 +5,7 @@ target/
 
 # Ephemeral / Received Files
 downloaded_*
-.fsociety_user
+.cipherlink_user
 
 # Demo and Temporary Files
 demo-*
