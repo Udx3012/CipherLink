@@ -10,7 +10,7 @@ use rand::Rng;
 use network::RawConnection;
 use ui::{AppEvent, AppState};
 
-const DEFAULT_RELAY: &str = "cipherlink-qzjr.onrender.com";
+const DEFAULT_RELAY: &str = "fsociety-qzjr.onrender.com";
 
 fn show_boot_animation() {
     let logo = r#"
