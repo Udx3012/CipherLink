@@ -105,7 +105,7 @@ pub fn start_ui_loop(
             
             let chat_paragraph = Paragraph::new(chat_content)
                 .block(Block::default()
-                    .title(" 🕵️ SECURE CHANNEL [CHAT] ")
+                    .title(" 🔐 CIPHERLINK [E2EE CHAT CHANNEL] ")
                     .borders(Borders::ALL)
                     .border_style(Style::default().fg(Color::Green))
                     .padding(Padding::new(1, 1, 1, 1)))
@@ -115,7 +115,7 @@ pub fn start_ui_loop(
 
             // 2. Sidebar
             let mut sidebar_content = format!(
-                "📶 Connection Status\n  {}\n\n🗝️ Room Access Code\n  {}\n\n🔒 Fingerprint\n  {}\n\n",
+                "⚡ CIPHERLINK v2.0\n\n📶 Connection Status\n  {}\n\n🗝️ Room Access Code\n  {}\n\n🔒 Fingerprint\n  {}\n\n",
                 state.conn_status, state.room_code, state.fingerprint
             );
 
